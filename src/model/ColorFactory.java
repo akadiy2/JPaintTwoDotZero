@@ -1,11 +1,5 @@
 package model;
 
-import exception.InvalidShapeException;
-import model.shape.Ellipse;
-import model.shape.Rectangle;
-import model.shape.Shape;
-import model.shape.Triangle;
-
 import java.awt.*;
 
 /**

@@ -1,5 +1,6 @@
 package model.shape;
 
+import model.ColorFactory;
 import model.ShapeShadingType;
 import model.ShapeType;
 
@@ -24,14 +25,24 @@ public class Rectangle extends QuadrilateralShape {
 
         if (ShapeShadingType.FILLED_IN == this.getShapeShadingType()) {
             g.fillRect(x, y, Math.abs(width), Math.abs(height));
+        } else if (ShapeShadingType.OUTLINE == this.getShapeShadingType()){
+            g.drawRect(x, y, Math.abs(width), Math.abs(height));
         } else {
+            g.fillRect(x, y, Math.abs(width), Math.abs(height));
+            g.setColor(ColorFactory.getColor(this.getSecondaryShapeColor()));
             g.drawRect(x, y, Math.abs(width), Math.abs(height));
         }
     }
 
     @Override
     public void clear(Graphics2D g) throws Exception {
-        g.clearRect(x, y, Math.abs(width), Math.abs(height));
+        g.setColor(Color.WHITE);
+        if (ShapeShadingType.OUTLINE_AND_FILLED_IN == this.getShapeShadingType()) {
+
+            g.fillRect(x - 1, y - 1, Math.abs(width) + 1, Math.abs(height) + 1);
+        }
+
+        g.fillRect(x, y, Math.abs(width), Math.abs(height));
     }
 
 }

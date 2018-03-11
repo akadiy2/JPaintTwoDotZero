@@ -50,6 +50,11 @@ public class MyMouseListener extends MouseInputAdapter implements IListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         clickedPoints.add(new Point(e.getX(), e.getY()));
+        try {
+            execute();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
     }
 
     @Override
@@ -57,7 +62,6 @@ public class MyMouseListener extends MouseInputAdapter implements IListener {
         IShape shape;
         ICommand command;
 
-        System.out.println(applicationState.isDeleteModeOn());
         if (applicationState.isDeleteModeOn()) {
             command = new DeleteShapeCommand(canvas, clickedPoints);
         } else {

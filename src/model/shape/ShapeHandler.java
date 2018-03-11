@@ -37,6 +37,7 @@ public class ShapeHandler {
             shape.setStartPoint(start);
             shape.setEndPoint(end);
             shape.setShapeColor(applicationState.getActivePrimaryColor());
+            shape.setSecondaryShapeColor(applicationState.getActiveSecondaryColor());
             shape.setShapeType(applicationState.getActiveShapeType());
             shape.setShapeShadingType(applicationState.getActiveShapeShadingType());
             shape.setStartAndEndPointMode(applicationState.getActiveStartAndEndPointMode());

@@ -39,7 +39,6 @@ public class GuiWindow extends JFrame implements IGuiWindow {
         JPanel window = createWindow();
         shapeHandler = new ShapeHandler(applicationState);
         this.canvas = canvas;
-        addMouseListener(new MyMouseListener( shapeHandler, canvas));
 
         JButton undoButton = getButton(EventName.UNDO);
         undoButton.addActionListener(e -> {
@@ -65,9 +64,15 @@ public class GuiWindow extends JFrame implements IGuiWindow {
 
         JButton deleteButton = getButton(EventName.DELETE);
         deleteButton.addActionListener(e -> {
-            applicationState.setDeleteModeOn(!applicationState.isDeleteModeOn());
-            ICommand deleteCommand = new DeleteShapeCommand(canvas, )
+
+            if (applicationState.isDeleteModeOn() == true) {
+                applicationState.setDeleteModeOn(false);
+            } else {
+                applicationState.setDeleteModeOn(true);
+            }
         });
+
+        addMouseListener(new MyMouseListener( shapeHandler, canvas));
 
 
         window.add(canvas, BorderLayout.CENTER);

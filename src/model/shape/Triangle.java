@@ -1,5 +1,6 @@
 package model.shape;
 
+import model.ColorFactory;
 import model.ShapeShadingType;
 import model.ShapeType;
 
@@ -56,7 +57,11 @@ public class Triangle extends Shape {
 
         if (ShapeShadingType.FILLED_IN == getShapeShadingType()) {
             g.fillPolygon(xCoords, yCoords, NUM_SIDES);
+        } else if (ShapeShadingType.OUTLINE == getShapeShadingType()) {
+            g.drawPolygon(xCoords, yCoords, NUM_SIDES);
         } else {
+            g.fillPolygon(xCoords, yCoords, NUM_SIDES);
+            g.setColor(ColorFactory.getColor(getSecondaryShapeColor()));
             g.drawPolygon(xCoords, yCoords, NUM_SIDES);
         }
 
@@ -64,6 +69,7 @@ public class Triangle extends Shape {
 
     @Override
     public void clear(Graphics2D g) throws Exception {
-        g.dispose();
+        g.setColor(Color.WHITE);
+        g.fillPolygon(xCoords, yCoords, NUM_SIDES);
     }
 }

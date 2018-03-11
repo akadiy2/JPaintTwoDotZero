@@ -1,5 +1,6 @@
 package view.gui;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -7,6 +8,10 @@ import java.util.NoSuchElementException;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import command.DeleteShapeCommand;
+import command.ICommand;
+import command.RedoCommand;
+import command.UndoCommand;
 import model.persistence.ApplicationState;
 import model.shape.ShapeHandler;
 import mouse.MyMouseListener;
@@ -34,7 +39,41 @@ public class GuiWindow extends JFrame implements IGuiWindow {
         JPanel window = createWindow();
         shapeHandler = new ShapeHandler(applicationState);
         this.canvas = canvas;
+
+        JButton undoButton = getButton(EventName.UNDO);
+        undoButton.addActionListener(e -> {
+            ICommand undo = new UndoCommand();
+            try {
+                undo.run();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+
+        JButton redoButton = getButton(EventName.REDO);
+        redoButton.addActionListener(e -> {
+            ICommand redo = new RedoCommand();
+            try {
+                redo.run();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+
+        JButton deleteButton = getButton(EventName.DELETE);
+        deleteButton.addActionListener(e -> {
+
+            if (applicationState.isDeleteModeOn() == true) {
+                applicationState.setDeleteModeOn(false);
+            } else {
+                applicationState.setDeleteModeOn(true);
+            }
+        });
+
         addMouseListener(new MyMouseListener( shapeHandler, canvas));
+
 
         window.add(canvas, BorderLayout.CENTER);
 		validate();

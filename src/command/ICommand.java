@@ -1,8 +1,9 @@
 package command;
 
-/**
- * Created by abhiramkadiyala on 2/11/18.
- */
+import java.io.IOException;
+
 public interface ICommand {
+
+    void run() throws IOException;
 
 }

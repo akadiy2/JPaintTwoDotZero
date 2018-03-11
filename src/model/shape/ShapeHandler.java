@@ -2,13 +2,18 @@ package model.shape;
 
 import exception.InvalidShapeException;
 import model.ShapeType;
-import model.interfaces.IApplicationState;
 import model.persistence.ApplicationState;
 
-import java.awt.*;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ShapeHandler {
     private ApplicationState applicationState;
+
+    public ShapeHandler() {
+    }
 
     public ShapeHandler(ApplicationState applicationState) {
         this.applicationState = applicationState;
@@ -17,16 +22,28 @@ public class ShapeHandler {
         return ShapeFactory.createShape(shapeType, p1, p2);
     }
 
-    public Shape createShape(Point start, Point end) throws Exception {
+    /**
+     * Creates an {@link IShape} based on the {@link ApplicationState}'s selected shape and given {@link Point}'s
+     *
+     * @param start - The {@link Point} retrieved when the mouse was pressed (beginning of shape)
+     * @param end - - The {@link Point} retrieved when the mouse was released (end of shape)
+     * @return an {@link IShape}
+     * @throws Exception
+     */
+    public IShape createShape(Point start, Point end) throws Exception {
         Shape shape = createShape(applicationState.getActiveShapeType(), start, end);
         if (shape != null) {
 
             shape.setStartPoint(start);
             shape.setEndPoint(end);
             shape.setShapeColor(applicationState.getActivePrimaryColor());
+            shape.setShapeType(applicationState.getActiveShapeType());
+            shape.setShapeShadingType(applicationState.getActiveShapeShadingType());
+            shape.setStartAndEndPointMode(applicationState.getActiveStartAndEndPointMode());
             return shape;
         }
 
         throw new InvalidShapeException("Unable to create shape");
     }
+
 }

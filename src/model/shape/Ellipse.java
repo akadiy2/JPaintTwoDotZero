@@ -1,41 +1,36 @@
 package model.shape;
 
-import model.ShapeColor;
-import model.ShapeShadingType;
-import model.ShapeType;
-import model.StartAndEndPointMode;
+import model.*;
 
 import java.awt.*;
 
 /**
  * Created by abhiramkadiyala on 2/6/18.
  */
-public class Ellipse extends Shape {
-
-    private int height;
-    private int width;
-    private int x;
-    private int y;
+public class Ellipse extends QuadrilateralShape {
 
     public Ellipse(Point p1, Point p2) {
         super(p1, p2);
         setShapeType(ShapeType.ELLIPSE);
+        setUp(p1,p2);
     }
 
     @Override
-    void setUp(Point p1, Point p2) {
-        if (p1 != null && p2 != null) {
-            this.x = (int) p1.getX();
-            this.y = (int) p1.getY();
-            this.width = (int) (p2.getX() - this.x);
-            this.height = (int) (p2.getY() - this.y);
-        }
-    }
-
-    @Override
-    public void draw(Graphics2D g) {
+    public void draw(Graphics2D g) throws Exception {
+        super.draw(g);
         System.out.println(String.format("Drawing a %s %s with coordinates %s, %s and height %s and width %s",
                 getShapeColor(), getShapeType().name(), x, y, height, width));
-        g.fillOval(x, y, width, height);
+        if (ShapeShadingType.FILLED_IN == this.getShapeShadingType()) {
+            g.fillOval(x, y, Math.abs(width), Math.abs(height));
+        } else {
+            g.drawOval(x, y, Math.abs(width), Math.abs(height));
+        }
+
+    }
+
+    @Override
+    public void clear(Graphics2D g) throws Exception {
+        g.setColor(Color.WHITE);
+        g.fillOval(x, y, Math.abs(width), Math.abs(height));
     }
 }

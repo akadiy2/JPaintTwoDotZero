@@ -1,9 +1,6 @@
 package model.shape;
 
-import model.ShapeColor;
-import model.ShapeShadingType;
-import model.ShapeType;
-import model.StartAndEndPointMode;
+import model.*;
 
 import java.awt.*;
 
@@ -31,10 +28,14 @@ public abstract class Shape implements IShape {
     public Shape(Point p1, Point p2) {
         this.startPoint = p1;
         this.endPoint = p2;
-        setUp(this.startPoint, this.endPoint);
     }
 
     abstract void setUp(Point p1, Point p2);
+
+    @Override
+    public void draw(Graphics2D g) throws Exception {
+        g.setColor(ColorFactory.getColor(this.getShapeColor()));
+    }
 
 
     public ShapeColor getShapeColor() {
@@ -77,6 +78,7 @@ public abstract class Shape implements IShape {
         this.startAndEndPointMode = startAndEndPointMode;
     }
 
+    @Override
     public Point getStartPoint() {
         return startPoint;
     }
@@ -85,11 +87,16 @@ public abstract class Shape implements IShape {
         this.startPoint = startPoint;
     }
 
+    @Override
     public Point getEndPoint() {
         return endPoint;
     }
 
     public void setEndPoint(Point endPoint) {
         this.endPoint = endPoint;
+    }
+
+    public String toString() {
+        return this.shapeType.name();
     }
 }

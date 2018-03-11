@@ -7,8 +7,6 @@ import model.StartAndEndPointMode;
 import model.dialogs.DialogProvider;
 import model.interfaces.IApplicationState;
 import model.interfaces.IDialogProvider;
-import model.shape.Shape;
-import model.shape.ShapeHandler;
 import view.interfaces.IUiModule;
 
 public class ApplicationState implements IApplicationState {
@@ -20,6 +18,7 @@ public class ApplicationState implements IApplicationState {
     private ShapeColor activeSecondaryColor;
     private ShapeShadingType activeShapeShadingType;
     private StartAndEndPointMode activeStartAndEndPointMode;
+    private boolean deleteModeOn;
 
     private static ApplicationState instance = null;
 
@@ -89,11 +88,20 @@ public class ApplicationState implements IApplicationState {
         return activeStartAndEndPointMode;
     }
 
+    public boolean isDeleteModeOn() {
+        return deleteModeOn;
+    }
+
+    public void setDeleteModeOn(boolean deleteModeOn) {
+        this.deleteModeOn = deleteModeOn;
+    }
+
     private void setDefaults() {
         activeShapeType = ShapeType.ELLIPSE;
         activePrimaryColor = ShapeColor.BLUE;
         activeSecondaryColor = ShapeColor.GREEN;
         activeShapeShadingType = ShapeShadingType.FILLED_IN;
         activeStartAndEndPointMode = StartAndEndPointMode.DRAW;
+        deleteModeOn = false;
     }
 }
